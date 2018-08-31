@@ -223,7 +223,7 @@ const app = function () {
 		url += '?key=' + API_KEY;
 		url += datasetname && datasetname !== null ? '&dataset=' + datasetname : '';
 		url += configkey && configkey !== null ? '&configkey=' + configkey : '';
-		//console.log('buildApiUrl: url=' + url);
+		console.log('buildApiUrl: url=' + url);
 		
 		return url;
 	}
@@ -237,11 +237,11 @@ const app = function () {
 		fetch(_buildApiUrl('config', settings.configkey))
 			.then((response) => response.json())
 			.then((json) => {
-				//console.log('json.status=' + json.status);
+				console.log('json.status=' + json.status);
 				if (json.status !== 'success') {
 					_setNotice(json.message);
 				}
-				//console.log('json.data: ' + JSON.stringify(json.data));
+				console.log('json.data: ' + JSON.stringify(json.data));
 				settings.config = json.data;
 				_setNotice('');
 
