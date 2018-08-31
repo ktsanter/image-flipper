@@ -41,10 +41,10 @@ const app = function () {
 		var params = {};
 				
 		var urlParams = new URLSearchParams(window.location.search);
-		params.sheetname = urlParams.has('sheetname') ? urlParams.get('sheetname') : null;
+		params.configkey = urlParams.has('configkey') ? urlParams.get('configkey') : null;
 
-		if (params.sheetname != null) {
-			settings.sheetname = params.sheetname;
+		if (params.configkey != null) {
+			settings.configkey = params.configkey;
 			success = true;
 		}
 		
@@ -218,11 +218,11 @@ const app = function () {
 	//--------------------------------------------------------------
 	// build URL for use with Google sheet web API
 	//--------------------------------------------------------------
-		function _buildApiUrl (datasetname, sheetname) {
+		function _buildApiUrl (datasetname, configkey) {
 		let url = API_BASE;
 		url += '?key=' + API_KEY;
 		url += datasetname && datasetname !== null ? '&dataset=' + datasetname : '';
-		url += sheetname && sheetname !== null ? '&sheetname=' + sheetname : '';
+		url += configkey && configkey !== null ? '&configkey=' + configkey : '';
 		//console.log('buildApiUrl: url=' + url);
 		
 		return url;
@@ -234,7 +234,7 @@ const app = function () {
 	function _getConfiguration (callback) {
 		_setNotice('loading configuration...');
 
-		fetch(_buildApiUrl('config', settings.sheetname))
+		fetch(_buildApiUrl('config', settings.configkey))
 			.then((response) => response.json())
 			.then((json) => {
 				//console.log('json.status=' + json.status);
@@ -248,7 +248,7 @@ const app = function () {
 				callback();
 			})
 			.catch((error) => {
-				_setNotice('failed to load configuration');
+				_setNotice('failed to load configuration for "' + settings.configkey + '"');
 				console.log(error);
 			})
 	}	
